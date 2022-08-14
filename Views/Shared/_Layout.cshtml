@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="/css/Site.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <!--<img src="/logo.png" alt="Логотип">-->
+        <nav>
+            <!-- Меню -->
+            <ul>
+                <li><a asp-controller="Home" asp-action="Index">Головна</a></li>
+                <li><a asp-controller="Home" asp-action="AboutSite">Про сайт</a></li>
+                <li><a asp-controller="Home" asp-action="ContactInformation">Контактна інформація</a></li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-controller="Account" asp-action="Registr">Регистрація</a></li>
+                    <li><a asp-controller="Account" asp-action="Login">Вхід</a></li>
+                }
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        @(User.Identity.Name)
+                        <ul>
+                            <li><a asp-controller="Profile" asp-action="Profile">Profile</a></li>
+                            <li><a asp-controller="Profile" asp-action="Settings">Settings</a></li>
+                            <li><a asp-controller="Account" asp-action="Lagout">Logout</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>*@
+</body>
+</html>

@@ -1,0 +1,22 @@
+﻿@model LoginViewModel
+@{ViewBag.Title = "Login.cshtml";}
+
+
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <p>
+            Email
+            <input asp-for="Email" type="text" />
+        </p>
+    </div>
+    <div>
+        <p>
+            пароль
+            <input asp-for="Password" type="password" />
+        </p>
+    </div>
+    <div>
+        <button type="submit">Авторизуватися</button>
+    </div>
+</form>

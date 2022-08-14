@@ -1,0 +1,33 @@
+﻿@model RegistrViewModel
+@{ViewBag.Title = "Registr.cshtml";}
+
+<form asp-controller="Account" asp-action="Registr" method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <p>
+            Email
+            <input asp-for="Email" type="text" />
+        </p>
+    </div>
+    <div>
+        <p>
+            пароль
+            <input asp-for="Password" type="password" />
+        </p>
+    </div>
+    <div>
+        <p>
+            пароль
+            <input asp-for="PasswordConfirme" type="password" />
+        </p>
+    </div>
+    <div>
+        <p>
+            Ім`я
+            <input asp-for="Name" type="text" />
+        </p>
+    </div>
+    <div>
+        <button type="submit">зареєструватися</button>
+    </div>
+</form>

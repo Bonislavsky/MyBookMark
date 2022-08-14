@@ -1,0 +1,20 @@
+﻿@model AddBookMarkViewModel
+
+<form asp-controller="Profile" asp-action="AddBookMark" method="post">
+    <input asp-for="CurrentFolderId" value="@Model.CurrentFolderId" hidden="hidden" />
+    <div>
+        <p>
+            <label>Назва:</label>
+            <input asp-for="Name" type="text" placeholder="фільм/книга/рецепт і тд..." />
+        </p>
+    </div>
+    <div>
+        <p>
+            <label>Url(посилання):</label>
+            <input asp-for="Url" type="url" required placeholder="https://www.google.com/" />
+        </p>
+    </div>
+    <div>
+        <button type="submit">Додати</button>
+    </div>
+</form>

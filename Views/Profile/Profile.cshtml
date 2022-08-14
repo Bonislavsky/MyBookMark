@@ -1,0 +1,75 @@
+﻿@model ProfileViewModel
+@{
+    ViewBag.Title = "Profile/index.cshtml";
+}
+
+<div>
+
+    @foreach (var folder in Model.Folders)
+    {
+        <div>
+            <input type="button" onclick="showDivFolder(@folder.Id)" value="@folder.Name"><br />
+            <div id="folder-@folder.Id" style="display: @((long)ViewData["CurrentFolder"] == folder.Id ? "block" : "none")" )>
+                @if (folder.BookMarks is not null)
+                {
+                    <span>@folder.Name</span><br />
+
+                    @foreach (var bookMark in folder.BookMarks)
+                    {
+                        <img width="16" height="16" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
+                        <a href="@bookMark.Url">@bookMark.Name</a>
+                        <a onclick="return deleteElement()" asp-controller="Profile" asp-action="DeleteBookMark" asp-route-bookMarkId="@bookMark.Id" asp-route-currentFolderId="@folder.Id">удалить закладку</a>
+                        <br />
+                    }
+                }
+                <input type="button" onclick="showAddNewBM(@folder.Id)" value="Новая закладка"><br />
+                <div id="addNewBM-@folder.Id" style="display: none">
+                    @await Html.PartialAsync("_AddBookMarkPartial", new AddBookMarkViewModel() { CurrentFolderId = folder.Id })
+                </div>
+                <a onclick="return deleteElement()" asp-controller="Profile" asp-action="DeleteFolder" asp-route-folderId="@folder.Id">удалить папку</a>
+            </div>
+        </div>
+    }
+    <input type="button" onclick="showHide()" value="Новая папка"><br />
+    <div id="addFolder" style="display: none">
+        @await Html.PartialAsync("_AddFolderPartial", new AddFolderViewModel() { UserId = Model.UserId })
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showDivFolder(CurrentFolderid) {
+        var x = document.getElementById("folder-" + CurrentFolderid);
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+
+    function showHide() {
+        var x = document.getElementById("addFolder");
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+
+    function deleteElement() {
+        if (confirm("Подтвердить")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function showAddNewBM(CurrentFolderid) {
+        var x = document.getElementById("addNewBM-" + CurrentFolderid);
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+</script>
+

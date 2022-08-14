@@ -1,0 +1,14 @@
+﻿@model AddFolderViewModel
+
+<form asp-controller="Profile" asp-action="AddFolder" method="post">
+    <input asp-for="UserId" value="@Model.UserId" hidden="hidden" />
+    <div>
+        <p>
+            <label>Назва:</label>
+            <input asp-for="Name" type="text" placeholder="папка/фільми/рецепти і тд..." />
+        </p>
+    </div>
+    <div>
+        <button type="submit">Додати</button>
+    </div>
+</form>
