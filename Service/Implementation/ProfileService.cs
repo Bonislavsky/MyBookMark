@@ -80,7 +80,7 @@ namespace MyBookMarks.Service.Implementation
            _bookMarkRepository.Add(
                 new BookMark()
                 {
-                    Name = bookmark.Name??"Закладка",
+                    Name = bookmark.Name?? bookmark.Url,
                     Url = bookmark.Url,
                     FolderId = bookmark.CurrentFolderId
                 });        
