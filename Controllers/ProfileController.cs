@@ -59,5 +59,11 @@ namespace MyBookMarks.Controllers
             _ProfileService.DeleteBookMark(bookMarkId);
             return RedirectToAction("Profile", new { CurrentFodlerId = currentFolderId });
         }
+
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            return View(); // comit
+        }
     }
 }
