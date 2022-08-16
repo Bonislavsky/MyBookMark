@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyBookMarks.Models.ViewModels;
 using MyBookMarks.Models.ViewModels.Profile;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyBookMarks.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IProfileService _ProfileService;
@@ -19,7 +21,7 @@ namespace MyBookMarks.Controllers
             _ProfileService = profileService;
         }
 
-        [HttpGet]
+        [HttpPost]      
         public async Task<IActionResult> Profile(long CurrentFodlerId = 0)
         {
             var userEmail = User.Identity.Name;
@@ -29,6 +31,13 @@ namespace MyBookMarks.Controllers
                 ViewData["CurrentFolder"] = CurrentFodlerId;
                 return View(response.Data);
             }
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Profile()
+        {
             return View();
         }
 

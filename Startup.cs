@@ -66,7 +66,7 @@ namespace MyBookMarks
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}");
+                    pattern: "{controller=Profile}/{action=Profile}");
                 endpoints.MapDefaultControllerRoute();
             });
         }
