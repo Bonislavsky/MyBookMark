@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MyBookMarks.Models.ViewModels;
 using MyBookMarks.Models.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace MyBookMarks.Controllers
 {
@@ -21,31 +22,30 @@ namespace MyBookMarks.Controllers
             _ProfileService = profileService;
         }
 
-        [HttpPost]      
-        public async Task<IActionResult> Profile(long CurrentFodlerId = 0)
+        [HttpGet]      
+        public async Task<IActionResult> Profile()
         {
             var userEmail = User.Identity.Name;
             var response = await _ProfileService.GetUser(userEmail);
             if(response.StatusCode == Domain.Enum.StatusCode.Ok)
             {
-                ViewData["CurrentFolder"] = CurrentFodlerId;
                 return View(response.Data);
             }
             return View();
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Profile()
+        public PartialViewResult ViewFolder(long folderId)
         {
-            return View();
+            var result = _ProfileService.GetBookMarks(folderId);
+            return PartialView("_ShowFolderPatrial", (result, folderId));
         }
 
         [HttpPost]
-        public IActionResult AddBookMark(AddBookMarkViewModel bookmark)
+        public IActionResult AddBookMark(AddBmViewModel bookmark)
         {
             _ProfileService.AddBookMark(bookmark);
-            return RedirectToAction("Profile", new { CurrentFodlerId = bookmark.CurrentFolderId });
+            return RedirectToAction("ViewFolder", new { folderId = bookmark.CurrentFolderId });
         }
 
         [HttpPost]
@@ -63,10 +63,10 @@ namespace MyBookMarks.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteBookMark(long bookMarkId, long currentFolderId)
+        public IActionResult DeleteBookMark(long bookmarkId, long folderId)
         {
-            _ProfileService.DeleteBookMark(bookMarkId);
-            return RedirectToAction("Profile", new { CurrentFodlerId = currentFolderId });
+            _ProfileService.DeleteBookMark(bookmarkId);
+            return RedirectToAction("ViewFolder", new { folderId = folderId });
         }
 
         [HttpGet]

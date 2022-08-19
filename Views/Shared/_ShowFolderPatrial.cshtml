@@ -1,0 +1,42 @@
+﻿@model (List<BookMark>, long)
+@foreach (var bookMark in Model.Item1)
+{
+    <img width="25" height="25" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
+    <a href="@bookMark.Url" target="_blank">@bookMark.Name</a>
+    <div>
+        <button onclick="deleteElement(@bookMark.Id, @Model.Item2)">удалить закладку</button>
+    </div>
+    <br />
+}
+
+<input type="button" onclick="showAddNewBM()" value="Новая закладка">
+<div id="addBM" style="display: none">
+    @await Html.PartialAsync("_AddBookMarkPartial", new AddBmViewModel() { CurrentFolderId = Model.Item2 })
+</div>
+
+<script type="text/javascript">
+    function deleteElement(BmId, folderId) {
+        if (confirm("Подтвердить")) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("DeleteBookMark", "Profile")',
+                data: { bookmarkId: BmId, folderId: folderId },
+                success: function (response){
+                    $("#demo").html(response);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    }
+
+    function showAddNewBM() {
+        var x = document.getElementById("addBM");
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+</script>

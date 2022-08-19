@@ -65,7 +65,7 @@ namespace MyBookMarks.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                             new ClaimsPrincipal(response.Data));
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "Profile");
                 }
                 ModelState.AddModelError("", response.Description);
             }

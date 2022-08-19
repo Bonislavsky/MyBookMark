@@ -11,6 +11,6 @@ namespace MyBookMarks.Models.ViewModels
         public string UserEmail { get; set; }
 
         public List<Folder> Folders { get; set; }
-        public AddBookMarkViewModel NewBookMark { get; set; }
+        public AddBmViewModel NewBookMark { get; set; }
     }
 }

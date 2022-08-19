@@ -13,11 +13,12 @@ namespace MyBookMarks.Service.Interfaces
     {
         Task<Response<ProfileViewModel>> GetUser(string UserEmail);
         Folder GetFolder(long id);
+        List<BookMark> GetBookMarks(long folderId);
 
         void AddFolder(AddFolderViewModel folder);
         void DeleteFolder(long folderId);
 
-        void AddBookMark(AddBookMarkViewModel bookmark);
+        void AddBookMark(AddBmViewModel bookmark);
         void DeleteBookMark(long bookmarkId);
     }
 }

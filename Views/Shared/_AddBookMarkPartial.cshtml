@@ -1,20 +1,40 @@
-﻿@model AddBookMarkViewModel
+﻿@model AddBmViewModel
 
-<form asp-controller="Profile" asp-action="AddBookMark" method="post">
-    <input asp-for="CurrentFolderId" value="@Model.CurrentFolderId" hidden="hidden" />
-    <div>
-        <p>
-            <label>Назва:</label>
-            <input asp-for="Name" type="text" placeholder="фільм/книга/рецепт і тд..." />
-        </p>
-    </div>
-    <div>
-        <p>
-            <label>Url(посилання):</label>
-            <input asp-for="Url" type="url" required placeholder="https://www.google.com/" />
-        </p>
-    </div>
-    <div>
-        <button type="submit">Додати</button>
-    </div>
-</form>
+<div>
+    <form id="folderFormId" onsubmit="return false;">
+        <input asp-for="CurrentFolderId" hidden="hidden" />
+        <div>
+            <p>
+                <label>Назва:</label>
+                <input asp-for="Name" type="text" placeholder="фільм/книга/рецепт і тд..." />
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>Url(посилання):</label>
+                <input asp-for="Url" type="url" required placeholder="https://www.google.com" />
+            </p>
+        </div>
+        <div>
+            <button onclick="AddBm()">Додати</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    function AddBm() {
+        var data = $('#folderFormId').serialize();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddBookMark", "Profile")',
+            data: JSON.parse(JSON.stringify(data)),
+            success: function (response){
+                $("#demo").html(response);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

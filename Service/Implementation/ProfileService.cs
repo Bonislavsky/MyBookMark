@@ -57,11 +57,6 @@ namespace MyBookMarks.Service.Implementation
 
             userProfile.Folders = await _folderRepository.GetUserFolderList(userProfile.UserId);
 
-            foreach (var folder in userProfile.Folders)
-            {
-                folder.BookMarks = _bookMarkRepository.GetFolderBookMarkList(folder.Id);
-            }
-
             return new Response<ProfileViewModel>
             {
                 Data = userProfile,
@@ -75,7 +70,12 @@ namespace MyBookMarks.Service.Implementation
             return _folderRepository.Get(id);
         }
 
-        public void AddBookMark(AddBookMarkViewModel bookmark)
+        public List<BookMark> GetBookMarks(long folderId)
+        {
+            return _bookMarkRepository.GetFolderBookMarkList(folderId);
+        }
+
+        public void AddBookMark(AddBmViewModel bookmark)
         {
            _bookMarkRepository.Add(
                 new BookMark()
