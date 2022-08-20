@@ -1,7 +1,7 @@
 ﻿@model AddBmViewModel
 
 <div>
-    <form id="folderFormId" onsubmit="return false;">
+    <form id="AddBmFormId" onsubmit="return false;">
         <input asp-for="CurrentFolderId" hidden="hidden" />
         <div>
             <p>
@@ -24,7 +24,7 @@
 
 <script>
     function AddBm() {
-        var data = $('#folderFormId').serialize();
+        var data = $('#AddBmFormId').serialize();
         $.ajax({
             type: 'POST',
             url: '@Url.Action("AddBookMark", "Profile")',

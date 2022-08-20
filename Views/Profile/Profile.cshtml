@@ -19,9 +19,7 @@
 <section class="section">
     <div id="demo"></div>
 </section>
-<aside class="aside">&#60;Aside&#62;</aside>
 <footer class="footer">&#60;Footer&#62;</footer>
-
 
 
 
@@ -31,8 +29,8 @@
                 type: 'GET',
                 url: '@Url.Action("ViewFolder", "Profile")',
                 data: { folderId: id },
-                success: function (response){
-                    $("#demo").html(response);
+                success: function (resContent) {
+                    $("#demo").html(resContent);
                 },
                 error: function (response) {
                     alert(response.responseText);

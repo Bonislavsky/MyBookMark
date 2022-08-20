@@ -1,4 +1,5 @@
 ﻿@model (List<BookMark>, long)
+ <!--масив закладок / id папки-->
 @foreach (var bookMark in Model.Item1)
 {
     <img width="25" height="25" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
@@ -14,11 +15,19 @@
     @await Html.PartialAsync("_AddBookMarkPartial", new AddBmViewModel() { CurrentFolderId = Model.Item2 })
 </div>
 
+
+<div id="aside">
+    <div id="deleteButton">
+        <a onclick="return deleteConfirm()" asp-controller="Profile" asp-action="DeleteFolder" asp-route-folderId="@Model.Item2">удалить папку</a>
+    </div>
+</div>
+
+
 <script type="text/javascript">
     function deleteElement(BmId, folderId) {
         if (confirm("Подтвердить")) {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '@Url.Action("DeleteBookMark", "Profile")',
                 data: { bookmarkId: BmId, folderId: folderId },
                 success: function (response){
@@ -29,6 +38,13 @@
                 }
             });
         }
+    }
+
+    function deleteConfirm() {
+        if (confirm("Подтвердить")) {
+            return true;
+        }
+        return false;
     }
 
     function showAddNewBM() {

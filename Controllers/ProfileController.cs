@@ -59,10 +59,10 @@ namespace MyBookMarks.Controllers
         public IActionResult DeleteFolder(long folderId)
         {
             _ProfileService.DeleteFolder(folderId);
-            return RedirectToAction("Profile", new { CurrentFodlerId = folderId });
+            return RedirectToAction("Profile");
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult DeleteBookMark(long bookmarkId, long folderId)
         {
             _ProfileService.DeleteBookMark(bookmarkId);
