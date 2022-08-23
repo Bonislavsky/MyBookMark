@@ -37,8 +37,9 @@ namespace MyBookMarks.Controllers
         [HttpGet]
         public PartialViewResult ViewFolder(long folderId)
         {
-            var result = _ProfileService.GetBookMarks(folderId);
-            return PartialView("_ShowFolderPatrial", (result, folderId));
+            var result = _ProfileService.GetFolder(folderId);
+            result.BookMarks = _ProfileService.GetBookMarks(folderId);
+            return PartialView("_ShowFolderPatrial", result);
         }
 
         [HttpPost]

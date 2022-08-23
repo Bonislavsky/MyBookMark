@@ -3,7 +3,7 @@
     ViewBag.Title = "Profile/index.cshtml";
 }
 
-<nav class="nav">
+<nav id="nav">
     @foreach (var folder in Model.Folders)
     {
         <div>
@@ -16,11 +16,8 @@
     </div>
 </nav>
 
-<section class="section">
-    <div id="demo"></div>
+<section id="content">
 </section>
-<footer class="footer">&#60;Footer&#62;</footer>
-
 
 
 <script type="text/javascript">
@@ -30,7 +27,7 @@
                 url: '@Url.Action("ViewFolder", "Profile")',
                 data: { folderId: id },
                 success: function (resContent) {
-                    $("#demo").html(resContent);
+                    $("#content").html(resContent);
                 },
                 error: function (response) {
                     alert(response.responseText);

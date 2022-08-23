@@ -1,26 +1,40 @@
-﻿@model (List<BookMark>, long)
- <!--масив закладок / id папки-->
-@foreach (var bookMark in Model.Item1)
-{
-    <img width="25" height="25" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
-    <a href="@bookMark.Url" target="_blank">@bookMark.Name</a>
+﻿@model Folder
+
+
+<header id="content-header">
+    @Model.Name
+</header>
+
+<div id="content-main">
+    @foreach (var bookMark in Model.BookMarks)
+    {
+        <div>
+            <img width="25" height="25" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
+            <a href="@bookMark.Url" target="_blank">@bookMark.Name</a>
+            <div class="deleteBmButton">
+                <button onclick="deleteElement(@bookMark.Id, @Model.Id)">удалить закладку</button>
+            </div>
+            <br />
+        </div>
+    }
+
     <div>
-        <button onclick="deleteElement(@bookMark.Id, @Model.Item2)">удалить закладку</button>
-    </div>
-    <br />
-}
-
-<input type="button" onclick="showAddNewBM()" value="Новая закладка">
-<div id="addBM" style="display: none">
-    @await Html.PartialAsync("_AddBookMarkPartial", new AddBmViewModel() { CurrentFolderId = Model.Item2 })
-</div>
-
-
-<div id="aside">
-    <div id="deleteButton">
-        <a onclick="return deleteConfirm()" asp-controller="Profile" asp-action="DeleteFolder" asp-route-folderId="@Model.Item2">удалить папку</a>
+        <input type="button" onclick="showAddNewBM()" value="Новая закладка">
+        <div id="addBM" style="display: none">
+            @await Html.PartialAsync("_AddBookMarkPartial", new AddBmViewModel() { CurrentFolderId = Model.Id })
+        </div>
     </div>
 </div>
+
+
+<aside id="content-aside">
+    <p>menu sort</p>
+    <div id="deleteFodlerButton">
+        <a onclick="return deleteConfirm()" asp-controller="Profile" asp-action="DeleteFolder" asp-route-folderId="@Model.Id">удалить папку</a>
+    </div>
+</aside>
+
+
 
 
 <script type="text/javascript">
@@ -31,7 +45,7 @@
                 url: '@Url.Action("DeleteBookMark", "Profile")',
                 data: { bookmarkId: BmId, folderId: folderId },
                 success: function (response){
-                    $("#demo").html(response);
+                    $("#content").html(response);
                 },
                 error: function (response) {
                     alert(response.responseText);

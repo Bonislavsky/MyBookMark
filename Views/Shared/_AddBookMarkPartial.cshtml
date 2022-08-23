@@ -30,7 +30,7 @@
             url: '@Url.Action("AddBookMark", "Profile")',
             data: JSON.parse(JSON.stringify(data)),
             success: function (response){
-                $("#demo").html(response);
+                $("#content").html(response);
             },
             error: function (response) {
                 alert(response.responseText);
