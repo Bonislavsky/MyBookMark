@@ -23,11 +23,10 @@ namespace MyBookMarks.DAL.Repositories
             {
                 _Dbase.Users.Add(user);
                 _Dbase.SaveChanges();
-
             }
             catch (Exception)
             {
-
+                throw new Exception();
             }
         }
 
