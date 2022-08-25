@@ -93,22 +93,17 @@ namespace MyBookMarks.Service.Implementation
             };
         }
 
-        private List<Folder> CreateStartFolders(int quantity, long userId)
+        private void CreateStartFolders(int quantity, long userId)
         {
-            Folder folder;
-            var ListFolder = new List<Folder>();
-
             for (int i = 0; i < quantity; i++)
             {
-                folder = new Folder
+                _folderRepository.Add(new Folder
                 {
+                    Name = "Папка",
                     UserId = userId,
                     BookMarks = new List<BookMark>()
-                };
-                _folderRepository.Add(folder);
-                ListFolder.Add(_folderRepository.Get(folder.Id));
+                });
             }
-            return ListFolder;
         }
 
         private ClaimsIdentity Authenticate(User user)
