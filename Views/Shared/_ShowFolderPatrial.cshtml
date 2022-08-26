@@ -28,13 +28,14 @@
 
 
 <aside id="content-aside">
-    <p>menu sort</p>
+    <div class="vertical-menu">
+        @await Html.PartialAsync("_MenuSortPartial", new SortBmViewModel() { FolderId = Model.Id })
+    </div>
+
     <div id="deleteFodlerButton">
         <a onclick="return deleteConfirm()" asp-controller="Profile" asp-action="DeleteFolder" asp-route-folderId="@Model.Id">удалить папку</a>
     </div>
 </aside>
-
-
 
 
 <script type="text/javascript">

@@ -22,17 +22,17 @@
 
 <script type="text/javascript">
     function showFolder(id) {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("ViewFolder", "Profile")',
-                data: { folderId: id },
-                success: function (resContent) {
-                    $("#content").html(resContent);
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("ViewFolder", "Profile")',
+            data: { folderId: id },
+            success: function (resContent) {
+                $("#content").html(resContent);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
     }
 
     function showHide() {

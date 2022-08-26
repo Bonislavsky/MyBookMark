@@ -70,9 +70,22 @@ namespace MyBookMarks.Service.Implementation
             return _folderRepository.Get(id);
         }
 
-        public List<BookMark> GetBookMarks(long folderId)
+        public List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate)
         {
-            return _bookMarkRepository.GetFolderBookMarkList(folderId);
+            var bookMarkList = _bookMarkRepository.GetFolderBookMarkList(folderId);
+            switch (type)
+            {
+                case SortType.SortByDataCreate:
+                    bookMarkList.Sort((x, y) => x.DateСreation.CompareTo(y.DateСreation));
+                    break;
+                case SortType.SortByName:
+                    bookMarkList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    break;
+                case SortType.SortByUrl:
+                    bookMarkList.Sort((x, y) => x.Url.CompareTo(y.Url));
+                    break;
+            }
+            return bookMarkList;
         }
 
         public void AddBookMark(AddBmViewModel bookmark)

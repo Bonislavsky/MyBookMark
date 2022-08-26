@@ -9,6 +9,7 @@ using MyBookMarks.Models.ViewModels;
 using MyBookMarks.Models.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using MyBookMarks.Domain.Enum;
 
 namespace MyBookMarks.Controllers
 {
@@ -68,6 +69,14 @@ namespace MyBookMarks.Controllers
         {
             _ProfileService.DeleteBookMark(bookmarkId);
             return RedirectToAction("ViewFolder", new { folderId = folderId });
+        }
+
+        [HttpPost]
+        public IActionResult SortBookmarks(SortBmViewModel sortmodel)
+        {
+            var result = _ProfileService.GetFolder(sortmodel.FolderId);
+            result.BookMarks = _ProfileService.GetBookMarks(sortmodel.FolderId, sortmodel.SortType);
+            return PartialView("_ShowFolderPatrial", result);
         }
 
         [HttpGet]
