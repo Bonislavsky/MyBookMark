@@ -46,6 +46,7 @@
     text-align: center;
 
     grid-area: header;
+
 }
 
 #content-aside {
@@ -54,14 +55,30 @@
     padding: 10px;
 
     grid-area: aside;
+
+    display: grid;
+    grid-template-rows: 30px 1fr 30px;
+    grid-template-areas:
+        'header-aside'
+        'aside'
+        'btnDelFodler';
+    grid-gap: 5px;
 }
 
 #content-main {
     background-color: rgb(202, 238, 160);
     border: 3px solid rgb(140, 202, 40);
     padding: 10px;
+
     grid-area: main;
-    grid-template-areas:
-        'model mdoel model'
-        'main aside';
 }
+
+#deleteFodlerButton {
+    grid-area: btnDelFodler;
+}
+
+#header-aside {
+    grid-area: header-aside;
+}
+
+

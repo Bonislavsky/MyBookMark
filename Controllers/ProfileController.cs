@@ -80,9 +80,15 @@ namespace MyBookMarks.Controllers
         }
 
         [HttpGet]
-        public IActionResult Settings()
+        public async Task<IActionResult> Settings()
         {
-            return View(); // comit
+            var userEmail = User.Identity.Name;
+            var response = await _ProfileService.GetUser(userEmail);
+            if (response.StatusCode == Domain.Enum.StatusCode.Ok)
+            {
+                return View(response.Data);
+            }
+            return View(); 
         }
     }
 }

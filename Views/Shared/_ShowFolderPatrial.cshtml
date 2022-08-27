@@ -28,6 +28,7 @@
 
 
 <aside id="content-aside">
+    <span id="header-aside">sort by</span>
     <div class="vertical-menu">
         @await Html.PartialAsync("_MenuSortPartial", new SortBmViewModel() { FolderId = Model.Id })
     </div>

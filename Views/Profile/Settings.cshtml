@@ -1,0 +1,13 @@
+﻿@model ProfileViewModel
+
+@{
+    ViewBag.Title = "profile.cshtml";
+}
+
+<form id="FormUser">
+    <input asp-for="UserId" hidden="hidden" />
+    <div>
+        <label>Email</label>
+        <input type="text" asp-for="UserEmail">
+    </div>
+</form>
