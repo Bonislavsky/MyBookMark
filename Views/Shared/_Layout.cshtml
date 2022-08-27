@@ -14,7 +14,7 @@
         <header id="header">
             <!-- Меню -->
             <ul>
-                <li><a asp-controller="Home" asp-action="ContactInformation">Контактна інформація</a></li>
+                <li><a asp-controller="Home" asp-action="Index">Контактна інформація</a></li>
                 @if (!User.Identity.IsAuthenticated)
                 {
                     <li><a asp-controller="Account" asp-action="Registr">Регистрація</a></li>
