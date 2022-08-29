@@ -7,6 +7,7 @@ namespace MyBookMarks.Models
 {
     public class User
     {
+        public static object Identity { get; internal set; }
         public long Id { get; set; }
 
         public string Name { get; set; }

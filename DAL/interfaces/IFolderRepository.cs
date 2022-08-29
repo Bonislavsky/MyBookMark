@@ -8,6 +8,6 @@ namespace MyBookMarks.DAL.interfaces
 {
     public interface IFolderRepository : IRepository<Folder>
     {
-        Task<List<Folder>> GetUserFolderList(long userId);
+        List<Folder> GetUserFolderList(long userId);
     }
 }

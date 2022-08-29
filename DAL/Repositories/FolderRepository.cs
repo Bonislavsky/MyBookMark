@@ -53,11 +53,11 @@ namespace MyBookMarks.DAL.Repositories
                 .ToList();
         }
 
-        public Task<List<Folder>> GetUserFolderList(long userId)
+        public List<Folder> GetUserFolderList(long userId)
         {
             return _Dbase.Folders
                 .Where(folder => folder.UserId == userId)
-                .ToListAsync();
+                .ToList();
         }
 
         public void Update(Folder folder)

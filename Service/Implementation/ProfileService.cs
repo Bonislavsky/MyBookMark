@@ -45,17 +45,18 @@ namespace MyBookMarks.Service.Implementation
             _folderRepository.Delete(folderId);
         }
 
-        public async Task<Response<ProfileViewModel>> GetUser(string userEmail)
+        public Response<ProfileViewModel> GetUser(string userEmail)
         {
             var userProfile = _userRepository.GetAll()
                 .Select(u => new ProfileViewModel
                 {
                     UserEmail = u.Email,
                     UserId = u.Id,
-                    Folders = u.Folders                   
+                    UserName = u.Name,
+                    Folders = u.Folders
                 }).FirstOrDefault(x => x.UserEmail == userEmail);
 
-            userProfile.Folders = await _folderRepository.GetUserFolderList(userProfile.UserId);
+            userProfile.Folders = _folderRepository.GetUserFolderList(userProfile.UserId);
 
             return new Response<ProfileViewModel>
             {

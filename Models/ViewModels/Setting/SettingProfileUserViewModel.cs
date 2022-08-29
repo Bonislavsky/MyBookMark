@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyBookMarks.Models.ViewModels
+namespace MyBookMarks.Models.ViewModels.Profile
 {
-    public class ProfileViewModel
+    public class SettingProfileUserViewModel
     {
         public long UserId { get; set; }
         public string UserEmail { get; set; }
         public string UserName { get; set; }
 
-        public List<Folder> Folders { get; set; }
+        public Dictionary<string, int> f {get;set; }       //<NameFolder, CountBm>
     }
 }

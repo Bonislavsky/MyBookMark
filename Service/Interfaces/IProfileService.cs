@@ -12,7 +12,7 @@ namespace MyBookMarks.Service.Interfaces
 {
     public interface IProfileService
     {
-        Task<Response<ProfileViewModel>> GetUser(string UserEmail);
+        Response<ProfileViewModel> GetUser(string userEmail);
         Folder GetFolder(long id);
         List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate);
 

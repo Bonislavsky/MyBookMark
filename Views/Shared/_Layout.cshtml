@@ -23,7 +23,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li>
-                        @(User.Identity.Name)
+                        @ViewBag.UserName
                         <ul>
                             <li><a asp-controller="Profile" asp-action="Profile">Profile</a></li>
                             <li><a asp-controller="Profile" asp-action="Settings">Settings</a></li>

@@ -24,10 +24,10 @@ namespace MyBookMarks.Controllers
         }
 
         [HttpGet]      
-        public async Task<IActionResult> Profile()
+        public IActionResult Profile()
         {
             var userEmail = User.Identity.Name;
-            var response = await _ProfileService.GetUser(userEmail);
+            var response = _ProfileService.GetUser(userEmail);
             if(response.StatusCode == Domain.Enum.StatusCode.Ok)
             {
                 return View(response.Data);
@@ -77,18 +77,6 @@ namespace MyBookMarks.Controllers
             var result = _ProfileService.GetFolder(sortmodel.FolderId);
             result.BookMarks = _ProfileService.GetBookMarks(sortmodel.FolderId, sortmodel.SortType);
             return PartialView("_ShowFolderPatrial", result);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Settings()
-        {
-            var userEmail = User.Identity.Name;
-            var response = await _ProfileService.GetUser(userEmail);
-            if (response.StatusCode == Domain.Enum.StatusCode.Ok)
-            {
-                return View(response.Data);
-            }
-            return View(); 
         }
     }
 }

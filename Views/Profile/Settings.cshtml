@@ -2,10 +2,15 @@
 
 @{
     ViewBag.Title = "profile.cshtml";
+    ViewBag.UserName = Model.UserName;
 }
 
 <form id="FormUser">
     <input asp-for="UserId" hidden="hidden" />
+    <div>
+        <label>ім'я'</label>
+        <input type="text" asp-for="UserName">
+    </div>
     <div>
         <label>Email</label>
         <input type="text" asp-for="UserEmail">
