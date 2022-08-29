@@ -47,10 +47,10 @@ namespace MyBookMarks.DAL.Repositories
             return _Dbase.Users;
         }
 
-        public Task<User> GetByEmail(string userEmail)
+        public User GetByEmail(string userEmail)
         {
             return _Dbase.Users
-                .FirstOrDefaultAsync(u => u.Email == userEmail);
+                .FirstOrDefault(u => u.Email == userEmail);
         }
 
         public void Update(User user)

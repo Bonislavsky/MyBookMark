@@ -31,14 +31,14 @@ namespace MyBookMarks.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegistrAsync(RegistrViewModel model)
+        public IActionResult RegistrAsync(RegistrViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var response = await _AccountService.RegisterUser(model);
+                var response = _AccountService.RegisterUser(model);
                 if(response.StatusCode == Domain.Enum.StatusCode.Ok)
                 {
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                            new ClaimsPrincipal(response.Data));
 
                     return RedirectToAction("Index","Home");
@@ -55,14 +55,14 @@ namespace MyBookMarks.Controllers
         }    
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var response = await _AccountService.LoginUser(model);
+                var response = _AccountService.LoginUser(model);
                 if (response.StatusCode == Domain.Enum.StatusCode.Ok)
                 {
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                             new ClaimsPrincipal(response.Data));
 
                     return RedirectToAction("Profile", "Profile");
