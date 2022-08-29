@@ -41,7 +41,7 @@ namespace MyBookMarks.Service.Implementation
 
         public void DeleteFolder(long folderId)
         {
-            _bookMarkRepository.DeletedBookMarkList(folderId);
+            _bookMarkRepository.DeleteAllUserBookmark(folderId);
             _folderRepository.Delete(folderId);
         }
 
@@ -73,7 +73,7 @@ namespace MyBookMarks.Service.Implementation
 
         public List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate)
         {
-            var bookMarkList = _bookMarkRepository.GetFolderBookMarkList(folderId);
+            var bookMarkList = _bookMarkRepository.GetBookMarkList(folderId);
             switch (type)
             {
                 case SortType.SortByDataCreate:

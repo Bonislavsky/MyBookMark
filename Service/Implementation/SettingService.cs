@@ -36,6 +36,10 @@ namespace MyBookMarks.Service.Implementation
 
             var folderUser = _folderRepository.GetUserFolderList(userProfile.UserId);
 
+            foreach (var folder in folderUser)
+            {
+                userProfile.Folders.Add(folder.Name, 1);
+            }
             return null;
         }
     }

@@ -11,6 +11,6 @@ namespace MyBookMarks.Models.ViewModels.Profile
         public string UserEmail { get; set; }
         public string UserName { get; set; }
 
-        public Dictionary<string, int> f {get;set; }       //<NameFolder, CountBm>
+        public Dictionary<string, int> Folders { get; set; }       //<NameFolder, CountBm>
     }
 }

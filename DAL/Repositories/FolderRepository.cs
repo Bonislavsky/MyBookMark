@@ -46,13 +46,6 @@ namespace MyBookMarks.DAL.Repositories
             return _Dbase.Folders;
         }
 
-        public List<Folder> GetBookMarks(long userId)
-        {
-            return _Dbase.Folders
-                .Include(Folder => Folder.UserId == userId)
-                .ToList();
-        }
-
         public List<Folder> GetUserFolderList(long userId)
         {
             return _Dbase.Folders
