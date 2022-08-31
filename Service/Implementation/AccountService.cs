@@ -97,9 +97,10 @@ namespace MyBookMarks.Service.Implementation
         {
             for (int i = 0; i < quantity; i++)
             {
+                int numberFodler = _folderRepository.GetUserFolderList(userId).Count;
                 _folderRepository.Add(new Folder
                 {
-                    Name = "Папка",
+                    Name = $"Папка №{numberFodler}",
                     UserId = userId,
                     BookMarks = new List<BookMark>()
                 });

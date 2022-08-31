@@ -1,5 +1,7 @@
 ﻿using MyBookMarks.DAL.interfaces;
+using MyBookMarks.Domain.Enum;
 using MyBookMarks.Domain.Response;
+using MyBookMarks.Models;
 using MyBookMarks.Models.ViewModels;
 using MyBookMarks.Models.ViewModels.Profile;
 using MyBookMarks.Service.Interfaces;
@@ -34,13 +36,56 @@ namespace MyBookMarks.Service.Implementation
                     UserName = u.Name,
                 }).FirstOrDefault(x => x.UserEmail == userEmail);
 
-            var folderUser = _folderRepository.GetUserFolderList(userProfile.UserId);
+            userProfile.Folders = _folderRepository.GetUserFolderList(userProfile.UserId);
 
-            foreach (var folder in folderUser)
+            return new Response<SettingProfileUserViewModel>
             {
-                userProfile.Folders.Add(folder.Name, 1);
+                Data = userProfile,
+                Description = "всі данні знайденні",
+                StatusCode = StatusCode.Ok
+            };
+        }
+
+        public Response<User> ChangeUserdata(SettingProfileUserViewModel model)
+        {
+            var response = new Response<User>();
+
+            try
+            {
+                User userData = _userRepository.Get(model.UserId);
+                userData.Email = model.UserEmail;
+                userData.Name = model.UserName;
+                _userRepository.Update(userData);
+
+                foreach (var folder in model.Folders)
+                {
+                    try
+                    {
+                        Folder folderData = _folderRepository.Get(folder.Id);
+                        folderData.Name = folder.Name;
+                        _folderRepository.Update(folderData);
+                    }
+                    catch (Exception)
+                    {
+                        response.Description = $"<внутрішня помилка> не вдалося оновити дані папок";
+                        response.StatusCode = StatusCode.ServerError;
+                        return response;
+                    }
+                }
+                userData.Folders = model.Folders;
+
+                response.Description = "дані успішно обновленні";
+                response.StatusCode = StatusCode.Ok;
+                response.Data = userData;
+                return response;
             }
-            return null;
+            catch (Exception)
+            {
+                response.Description = $"<внутрішня помилка> не вдалося оновити дані";
+                response.StatusCode = StatusCode.ServerError;
+
+                return response;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="conteiner">
@@ -26,7 +27,7 @@
                         @ViewBag.UserName
                         <ul>
                             <li><a asp-controller="Profile" asp-action="Profile">Profile</a></li>
-                            <li><a asp-controller="Profile" asp-action="Settings">Settings</a></li>
+                            <li><a asp-controller="Setting" asp-action="Settings">Settings</a></li>
                             <li><a asp-controller="Account" asp-action="Lagout">Logout</a></li>
                         </ul>
                     </li>
