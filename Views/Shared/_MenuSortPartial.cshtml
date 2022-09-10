@@ -1,0 +1,50 @@
+﻿@model SortBmViewModel
+
+<div>
+    <form id="SortForm-SortByDataCreate" onsubmit="return false;">
+        <input asp-for="FolderId" hidden="hidden" />
+        <div>
+            <div>
+                <input asp-for="SortType" value="@SortType.SortByDataCreate" hidden="hidden" />
+                <button onclick="SortBy('SortByDataCreate')">Data Create</button>
+            </div>
+        </div>
+    </form>
+    <form id="SortForm-SortByName" onsubmit="return false;">
+        <input asp-for="FolderId" hidden="hidden" />
+        <div>
+            <div>
+                <input asp-for="SortType" value="@SortType.SortByName" hidden="hidden" />
+                <button onclick="SortBy('SortByName')">Name</button>
+            </div>
+        </div>
+    </form>
+    <form id="SortForm-SortByUrl" onsubmit="return false;">
+        <input asp-for="FolderId" hidden="hidden" />
+        <div>
+            <div>
+                <input asp-for="SortType" value="@SortType.SortByUrl" hidden="hidden" />
+                <button onclick="SortBy('SortByUrl')">Url</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function SortBy(type) {
+        var idform = '#SortForm-' + type;
+        var data = $(idform).serialize();
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SortBookmarks", "Profile")',
+            data: JSON.parse(JSON.stringify(data)),
+            success: function (response) {
+                $("#content").html(response);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    }
+</script>

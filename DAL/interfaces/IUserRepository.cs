@@ -8,6 +8,6 @@ namespace MyBookMarks.DAL.interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> GetByEmail(string email);
+        User GetByEmail(string email);
     }
 }

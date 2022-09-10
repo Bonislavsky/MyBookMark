@@ -1,0 +1,84 @@
+﻿.conteiner {
+    display: grid;
+    grid-template-columns: 175px auto;
+    grid-template-rows: minmax(25px, 175px) minmax(700px, 1fr);
+    grid-template-areas:
+        "header header"
+        "nav content";
+    grid-gap: 10px;
+}
+
+#header {
+    background-color: rgb(241, 240, 176);
+    border: 3px solid rgb(190, 166, 85);
+    padding: 10px;
+
+    grid-area: header;
+}
+
+#nav {
+    background-color: rgb(198, 245, 216);
+    border: 3px solid rgb(85, 145, 77);
+    padding: 10px;
+
+    grid-area: nav;
+}
+
+#content {
+    background-color: rgb(157, 200, 235);
+    border: 3px solid rgb(76, 117, 141);
+    padding: 5px;
+
+    grid-area: content;
+
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    grid-template-rows: 30px 1fr;
+    grid-template-areas:
+        'header aside'
+        'main aside';
+    grid-gap: 5px;
+}
+
+#content-header {
+    background-color: rgb(209, 110, 179);
+    border: 3px solid rgb(117, 13, 121);
+    text-align: center;
+
+    grid-area: header;
+
+}
+
+#content-aside {
+    background-color: rgb(137, 211, 216);
+    border: 3px solid rgb(86, 172, 212);
+    padding: 10px;
+
+    grid-area: aside;
+
+    display: grid;
+    grid-template-rows: 30px 1fr 30px;
+    grid-template-areas:
+        'header-aside'
+        'aside'
+        'btnDelFodler';
+    grid-gap: 5px;
+}
+
+#content-main {
+    background-color: rgb(202, 238, 160);
+    border: 3px solid rgb(140, 202, 40);
+    padding: 10px;
+
+    grid-area: main;
+}
+
+#deleteFodlerButton {
+    grid-area: btnDelFodler;
+}
+
+#header-aside {
+    grid-area: header-aside;
+}
+
+

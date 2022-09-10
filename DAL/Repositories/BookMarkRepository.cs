@@ -54,16 +54,16 @@ namespace MyBookMarks.DAL.Repositories
             return _Dbase.BookMarks;
         }
 
-        public List<BookMark> GetFolderBookMarkList(long folderId)
+        public List<BookMark> GetBookMarkList(long folderId)
         {
             return _Dbase.BookMarks
                     .Where(folder => folder.FolderId == folderId)
                     .ToList();
         }
 
-        public void DeletedBookMarkList(long folderId)
+        public void DeleteAllUserBookmark(long folderId)
         {
-            var removeBookmark = GetFolderBookMarkList(folderId);
+            var removeBookmark = GetBookMarkList(folderId);
             _Dbase.BookMarks.RemoveRange(removeBookmark);
             _Dbase.SaveChanges();
         }

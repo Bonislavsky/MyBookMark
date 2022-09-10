@@ -12,15 +12,5 @@ namespace MyBookMarks.Controllers
         {
             return View();
         }
-
-        public IActionResult AboutSite()
-        {
-            return View();
-        }
-
-        public IActionResult ContactInformation()
-        {
-            return View();
-        }
     }
 }

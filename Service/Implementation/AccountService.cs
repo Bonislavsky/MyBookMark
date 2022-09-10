@@ -27,9 +27,9 @@ namespace MyBookMarks.Service.Implementation
             _folderRepository = folderRepository;
         }
 
-        public async Task<Response<ClaimsIdentity>> LoginUser(LoginViewModel model)
+        public Response<ClaimsIdentity> LoginUser(LoginViewModel model)
         {   
-            User user = await _userRepository.GetByEmail(model.Email);
+            User user = _userRepository.GetByEmail(model.Email);
 
             if (user == null)
             {
@@ -59,9 +59,9 @@ namespace MyBookMarks.Service.Implementation
             
         }
 
-        public async Task<Response<ClaimsIdentity>> RegisterUser(RegistrViewModel model)
+        public Response<ClaimsIdentity> RegisterUser(RegistrViewModel model)
         {
-            User user = await _userRepository.GetByEmail(model.Email);
+            User user = _userRepository.GetByEmail(model.Email);
 
             if (user != null)
             {
@@ -93,22 +93,18 @@ namespace MyBookMarks.Service.Implementation
             };
         }
 
-        private List<Folder> CreateStartFolders(int quantity, long userId)
+        private void CreateStartFolders(int quantity, long userId)
         {
-            Folder folder;
-            var ListFolder = new List<Folder>();
-
             for (int i = 0; i < quantity; i++)
             {
-                folder = new Folder
+                int numberFodler = _folderRepository.GetUserFolderList(userId).Count;
+                _folderRepository.Add(new Folder
                 {
+                    Name = $"Папка №{numberFodler}",
                     UserId = userId,
                     BookMarks = new List<BookMark>()
-                };
-                _folderRepository.Add(folder);
-                ListFolder.Add(_folderRepository.Get(folder.Id));
+                });
             }
-            return ListFolder;
         }
 
         private ClaimsIdentity Authenticate(User user)

@@ -46,18 +46,11 @@ namespace MyBookMarks.DAL.Repositories
             return _Dbase.Folders;
         }
 
-        public List<Folder> GetBookMarks(long userId)
-        {
-            return _Dbase.Folders
-                .Include(Folder => Folder.UserId == userId)
-                .ToList();
-        }
-
-        public Task<List<Folder>> GetUserFolderList(long userId)
+        public List<Folder> GetUserFolderList(long userId)
         {
             return _Dbase.Folders
                 .Where(folder => folder.UserId == userId)
-                .ToListAsync();
+                .ToList();
         }
 
         public void Update(Folder folder)

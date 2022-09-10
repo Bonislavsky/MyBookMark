@@ -8,7 +8,7 @@ namespace MyBookMarks.DAL.interfaces
 {
     public interface IBookMarkRepository : IRepository<BookMark>
     {
-        List<BookMark> GetFolderBookMarkList(long folderId);
-        void DeletedBookMarkList(long folderId);
+        List<BookMark> GetBookMarkList(long folderId);
+        void DeleteAllUserBookmark(long folderId);
     }
 }

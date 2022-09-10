@@ -51,6 +51,7 @@ namespace MyBookMarks
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<ISettingService, SettingService>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

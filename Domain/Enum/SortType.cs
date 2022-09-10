@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace MyBookMarks.Domain.Enum
 {
-    public enum StatusCode
+    public enum SortType    
     {
-        Ok = 1,
-        ServerError = 2,
-        Warning = 3,
+        SortByDataCreate = 1,
+        SortByName,
+        SortByUrl,
     }
 }

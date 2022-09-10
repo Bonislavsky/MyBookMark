@@ -12,8 +12,8 @@ namespace MyBookMarks.Service.Interfaces
 {
     public interface IAccountService
     {
-        Task<Response<ClaimsIdentity>> RegisterUser(RegistrViewModel model);
+        Response<ClaimsIdentity> RegisterUser(RegistrViewModel model);
 
-        Task<Response<ClaimsIdentity>> LoginUser(LoginViewModel model);
+        Response<ClaimsIdentity> LoginUser(LoginViewModel model);
     }   
 }

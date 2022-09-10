@@ -7,9 +7,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using MyBookMarks.Models.ViewModels;
 using MyBookMarks.Models.ViewModels.Profile;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using MyBookMarks.Domain.Enum;
+using Microsoft.AspNetCore.Http;
 
 namespace MyBookMarks.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IProfileService _ProfileService;
@@ -19,24 +24,35 @@ namespace MyBookMarks.Controllers
             _ProfileService = profileService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Profile(long CurrentFodlerId = 0)
+        [HttpGet]      
+        public IActionResult Profile()
         {
             var userEmail = User.Identity.Name;
-            var response = await _ProfileService.GetUser(userEmail);
+            var response = _ProfileService.GetUser(userEmail);
             if(response.StatusCode == Domain.Enum.StatusCode.Ok)
             {
-                ViewData["CurrentFolder"] = CurrentFodlerId;
                 return View(response.Data);
             }
             return View();
         }
 
-        [HttpPost]
-        public IActionResult AddBookMark(AddBookMarkViewModel bookmark)
+        [HttpGet]
+        public PartialViewResult ViewFolder(long folderId)
         {
-            _ProfileService.AddBookMark(bookmark);
-            return RedirectToAction("Profile", new { CurrentFodlerId = bookmark.CurrentFolderId });
+            var result = _ProfileService.GetFolder(folderId);
+            result.BookMarks = _ProfileService.GetBookMarks(folderId);
+            return PartialView("_ShowFolderPatrial", result);
+        }
+
+        [HttpPost]
+        public IActionResult AddBookMark(AddBmViewModel bookmark)
+        {
+            if (Uri.IsWellFormedUriString(bookmark.Url, UriKind.Absolute))
+            {
+                _ProfileService.AddBookMark(bookmark);
+                return RedirectToAction("ViewFolder", new { folderId = bookmark.CurrentFolderId });
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPost]
@@ -50,20 +66,22 @@ namespace MyBookMarks.Controllers
         public IActionResult DeleteFolder(long folderId)
         {
             _ProfileService.DeleteFolder(folderId);
-            return RedirectToAction("Profile", new { CurrentFodlerId = folderId });
+            return RedirectToAction("Profile");
         }
 
-        [HttpGet]
-        public IActionResult DeleteBookMark(long bookMarkId, long currentFolderId)
+        [HttpPost]
+        public IActionResult DeleteBookMark(long bookmarkId, long folderId)
         {
-            _ProfileService.DeleteBookMark(bookMarkId);
-            return RedirectToAction("Profile", new { CurrentFodlerId = currentFolderId });
+            _ProfileService.DeleteBookMark(bookmarkId);
+            return RedirectToAction("ViewFolder", new { folderId = folderId });
         }
 
-        [HttpGet]
-        public IActionResult Settings()
+        [HttpPost]
+        public IActionResult SortBookmarks(SortBmViewModel sortmodel)
         {
-            return View(); // comit
+            var result = _ProfileService.GetFolder(sortmodel.FolderId);
+            result.BookMarks = _ProfileService.GetBookMarks(sortmodel.FolderId, sortmodel.SortType);
+            return PartialView("_ShowFolderPatrial", result);
         }
     }
 }

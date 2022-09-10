@@ -1,0 +1,72 @@
+﻿@model SettingProfileUserViewModel
+
+@{
+    ViewBag.Title = "profile.cshtml";
+    ViewBag.UserName = Model.UserName;
+}
+
+
+<section>
+    <form id="FormUser" onsubmit="return false;">
+        <input asp-for="UserId" hidden="hidden" />
+        <div>
+            <label>ім'я'</label>
+            <input type="text" asp-for="UserName">
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="text" asp-for="UserEmail">
+        </div>
+        <span>Ваші папки</span>
+        <div>
+            @for (int i = 0; i < Model.Folders.Count; i++)
+            {
+                <input type="hidden" asp-for="Folders[i].Id">
+                <input type="hidden" asp-for="Folders[i].UserId">
+                <input type="text" asp-for="Folders[i].Name">
+            }
+        </div>
+        <div>
+            <button onclick="SaveChange()">Зберегти</button>
+        </div>
+    </form>
+</section>
+
+<script>
+    function SaveChange() {
+        var data = $('#FormUser').serialize();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Settings", "Setting")',
+            data: JSON.parse(JSON.stringify(data)),
+            success: function (response) {
+                if (response.statusCode === "Ok")
+                {
+                    Swal.fire({
+                        title: 'Інформація',
+                        text: response.description,
+                        icon: 'success',
+                        confirmButtonText: 'Окей'
+                    })
+                }
+                else if (response.statusCode === "error")
+                {
+                    Swal.fire({
+                        title: 'Інформація',
+                        text: response.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                    })
+                }
+            },
+            error: function (data) {
+                Swal.fire({
+                    title: 'Інформація',
+                    text: 'Ошибка валидации',
+                    icon: 'error',
+                    confirmButtonText: 'Окей'
+                })
+            }
+        });
+    }
+</script>

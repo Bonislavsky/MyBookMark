@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyBookMarks.Models.ViewModels
 {
-    public class AddBookMarkViewModel 
+    public class AddBmViewModel 
     {
         public string Name { get; set; }
         public string Url { get; set; }

@@ -41,26 +41,22 @@ namespace MyBookMarks.Service.Implementation
 
         public void DeleteFolder(long folderId)
         {
-            _bookMarkRepository.DeletedBookMarkList(folderId);
+            _bookMarkRepository.DeleteAllUserBookmark(folderId);
             _folderRepository.Delete(folderId);
         }
 
-        public async Task<Response<ProfileViewModel>> GetUser(string userEmail)
+        public Response<ProfileViewModel> GetUser(string userEmail)
         {
             var userProfile = _userRepository.GetAll()
                 .Select(u => new ProfileViewModel
                 {
                     UserEmail = u.Email,
                     UserId = u.Id,
-                    Folders = u.Folders                   
+                    UserName = u.Name,
+                    Folders = u.Folders
                 }).FirstOrDefault(x => x.UserEmail == userEmail);
 
-            userProfile.Folders = await _folderRepository.GetUserFolderList(userProfile.UserId);
-
-            foreach (var folder in userProfile.Folders)
-            {
-                folder.BookMarks = _bookMarkRepository.GetFolderBookMarkList(folder.Id);
-            }
+            userProfile.Folders = _folderRepository.GetUserFolderList(userProfile.UserId);
 
             return new Response<ProfileViewModel>
             {
@@ -75,11 +71,30 @@ namespace MyBookMarks.Service.Implementation
             return _folderRepository.Get(id);
         }
 
-        public void AddBookMark(AddBookMarkViewModel bookmark)
+        public List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate)
+        {
+            var bookMarkList = _bookMarkRepository.GetBookMarkList(folderId);
+            switch (type)
+            {
+                case SortType.SortByDataCreate:
+                    bookMarkList.Sort((x, y) => x.DateСreation.CompareTo(y.DateСreation));
+                    break;
+                case SortType.SortByName:
+                    bookMarkList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    break;
+                case SortType.SortByUrl:
+                    bookMarkList.Sort((x, y) => x.Url.CompareTo(y.Url));
+                    break;
+            }
+            return bookMarkList;
+        }
+
+        public void AddBookMark(AddBmViewModel bookmark)
         {
            _bookMarkRepository.Add(
                 new BookMark()
                 {
+                    DateСreation = DateTime.UtcNow,
                     Name = bookmark.Name?? bookmark.Url,
                     Url = bookmark.Url,
                     FolderId = bookmark.CurrentFolderId
