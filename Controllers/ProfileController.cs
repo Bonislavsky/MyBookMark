@@ -10,6 +10,7 @@ using MyBookMarks.Models.ViewModels.Profile;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using MyBookMarks.Domain.Enum;
+using Microsoft.AspNetCore.Http;
 
 namespace MyBookMarks.Controllers
 {
@@ -46,8 +47,12 @@ namespace MyBookMarks.Controllers
         [HttpPost]
         public IActionResult AddBookMark(AddBmViewModel bookmark)
         {
-            _ProfileService.AddBookMark(bookmark);
-            return RedirectToAction("ViewFolder", new { folderId = bookmark.CurrentFolderId });
+            if (Uri.IsWellFormedUriString(bookmark.Url, UriKind.Absolute))
+            {
+                _ProfileService.AddBookMark(bookmark);
+                return RedirectToAction("ViewFolder", new { folderId = bookmark.CurrentFolderId });
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpPost]

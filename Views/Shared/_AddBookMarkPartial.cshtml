@@ -12,7 +12,7 @@
         <div>
             <p>
                 <label>Url(посилання):</label>
-                <input asp-for="Url" type="url" required placeholder="https://www.google.com" />
+                <input asp-for="Url" type="url" placeholder="https://www.google.com" />
             </p>
         </div>
         <div>
@@ -32,8 +32,13 @@
             success: function (response){
                 $("#content").html(response);
             },
-            error: function (response) {
-                alert(response.responseText);
+            error: function (data) {
+                Swal.fire({
+                    title: 'Інформація',
+                    text: 'Введіть коректну адресу',
+                    icon: 'error',
+                    confirmButtonText: 'Окей'
+                })
             }
         });
     }
