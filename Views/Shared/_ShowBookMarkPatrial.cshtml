@@ -1,0 +1,124 @@
+﻿@model Folder
+
+
+<header id="content-header">
+    @Model.Name
+</header>
+
+<div id="content-main">
+    @foreach (var bookMark in Model.BookMarks)
+    {
+        <div>
+            <img width="25" height="25" src="http://www.google.com/s2/favicons?domain=@bookMark.Url" />
+            <a href="@bookMark.Url" target="_blank">@bookMark.Name</a>
+            <div class="deleteBmButton">
+                <button onclick="deleteBookMark(@bookMark.Id, @Model.Id)">удалить закладку</button>
+            </div>
+            <br />
+        </div>
+    }
+
+    <div>
+        <input type="button" onclick="showAddNewBM()" value="Новая закладка">
+        <div id="addBM" style="display: none">
+            @await Html.PartialAsync("_AddBookMarkPartial", new AddBmViewModel() { CurrentFolderId = Model.Id })
+        </div>
+    </div>
+</div>
+
+
+<aside id="content-aside">
+    <span id="header-aside">sort by</span>
+    <div class="vertical-menu">
+        @await Html.PartialAsync("_MenuSortPartial", new SortBmViewModel() { FolderId = Model.Id })
+    </div>
+
+    <div id="deleteFodlerButton">
+        <button onclick="deleteFodler(@Model.UserId, @Model.Id)">удалить папку</button>
+    </div>
+</aside>
+
+
+<script type="text/javascript">
+    function deleteBookMark(BmId, folderId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteBookMark", "Profile")',
+                data: { bookmarkId: BmId, folderId: folderId },
+                success: function (response) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    $("#content").html(response);
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error(^◕.◕^)',
+                        text: response.responseText,
+                    })
+                }
+            });
+            }
+        })
+    }
+
+
+    function deleteFodler(userId, folderId) {
+        Swal.fire({
+            title: 'Ви впевнені?',
+            text: "Ви не зможете повернути все назад",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Так, видалити',
+            cancelButtonText: 'Не видаляти',
+        }).then((result) => {
+            if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteFolder", "Profile")',
+                data: { userId: userId, folderId: folderId },
+                success: function (response) {
+                    Swal.fire(
+                        'Видалено!',
+                        'ця папка була видалена',
+                        'success'   
+                    )
+                    $("#content").html('<span>оберіть папку(✿◠‿◠)</span>');
+                    $("#nav").html(response);
+                },
+                error: function (response) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Помилка(^◕.◕^)',
+                        text: response.responseText,
+                    })
+                }
+            });
+            }
+        })
+    }
+
+    function showAddNewBM() {
+        var x = document.getElementById("addBM");
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+</script>

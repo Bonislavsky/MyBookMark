@@ -81,4 +81,7 @@
     grid-area: header-aside;
 }
 
-
+#ContactInfo {
+    text-align: center;
+    grid-area: content;
+}

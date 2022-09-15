@@ -41,7 +41,7 @@ namespace MyBookMarks.Controllers
         {
             var result = _ProfileService.GetFolder(folderId);
             result.BookMarks = _ProfileService.GetBookMarks(folderId);
-            return PartialView("_ShowFolderPatrial", result);
+            return PartialView("_ShowBookMarkPatrial", result);
         }
 
         [HttpPost]
@@ -56,17 +56,19 @@ namespace MyBookMarks.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddFolder(AddFolderViewModel folder)
+        public IActionResult AddFolder(AddFolderViewModel model)
         {
-            _ProfileService.AddFolder(folder);
-            return RedirectToAction("Profile");
+            _ProfileService.AddFolder(model);
+            var result = _ProfileService.GetFolders(model.UserId);
+            return PartialView("_ShowListFolderPartial", new ShowFolderList() { Folders = result, UserId = model.UserId });
         }
 
-        [HttpGet]
-        public IActionResult DeleteFolder(long folderId)
+        [HttpPost]
+        public PartialViewResult DeleteFolder(long userId, long folderId)
         {
             _ProfileService.DeleteFolder(folderId);
-            return RedirectToAction("Profile");
+            var result = _ProfileService.GetFolders(userId);
+            return PartialView("_ShowListFolderPartial", new ShowFolderList(){ Folders = result, UserId = userId });
         }
 
         [HttpPost]
@@ -81,7 +83,7 @@ namespace MyBookMarks.Controllers
         {
             var result = _ProfileService.GetFolder(sortmodel.FolderId);
             result.BookMarks = _ProfileService.GetBookMarks(sortmodel.FolderId, sortmodel.SortType);
-            return PartialView("_ShowFolderPatrial", result);
+            return PartialView("_ShowBookMarkPatrial", result);
         }
     }
 }
