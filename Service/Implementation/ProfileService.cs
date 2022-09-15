@@ -71,6 +71,11 @@ namespace MyBookMarks.Service.Implementation
             return _folderRepository.Get(id);
         }
 
+        public List<Folder> GetFolders(long id)
+        {
+            return _folderRepository.GetUserFolderList(id);
+        }
+
         public List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate)
         {
             var bookMarkList = _bookMarkRepository.GetBookMarkList(folderId);

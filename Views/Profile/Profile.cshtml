@@ -5,19 +5,11 @@
 }
 
 <nav id="nav">
-    @foreach (var folder in Model.Folders)
-    {
-        <div>
-            <input id="folder-@folder.Id" type="button" onclick="showFolder(@folder.Id)" value="@folder.Name">
-        </div>
-    }
-    <input type="button" onclick="showHide()" value="Новая папка"><br />
-    <div id="addFolder" style="display: none">
-        @await Html.PartialAsync("_AddFolderPartial", new AddFolderViewModel() { UserId = Model.UserId })
-    </div>
+    @await Html.PartialAsync("_ShowListFolderPartial", new ShowFolderList() { Folders = Model.Folders, UserId = Model.UserId})
 </nav>
 
 <section id="content">
+    <span>оберіть папку(✿◠‿◠)</span>
 </section>
 
 

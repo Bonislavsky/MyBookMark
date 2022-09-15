@@ -14,6 +14,7 @@ namespace MyBookMarks.Service.Interfaces
     {
         Response<ProfileViewModel> GetUser(string userEmail);
         Folder GetFolder(long id);
+        List<Folder> GetFolders(long id);
         List<BookMark> GetBookMarks(long folderId, SortType type = SortType.SortByDataCreate);
 
         void AddFolder(AddFolderViewModel folder);
