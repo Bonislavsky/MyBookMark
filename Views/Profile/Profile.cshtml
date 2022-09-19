@@ -4,13 +4,16 @@
     ViewBag.UserName = Model.UserName;
 }
 
-<nav id="nav">
-    @await Html.PartialAsync("_ShowListFolderPartial", new ShowFolderList() { Folders = Model.Folders, UserId = Model.UserId})
-</nav>
+<div class="main-frame">
+    <nav id="nav">
+        @await Html.PartialAsync("_ShowListFolderPartial", new ShowFolderList() { Folders = Model.Folders, UserId = Model.UserId })
+    </nav>
 
-<section id="content">
-    <span>оберіть папку(✿◠‿◠)</span>
-</section>
+    <section id="content">
+        <span>оберіть папку(✿◠‿◠)</span>
+    </section>
+</div>
+
 
 
 <script type="text/javascript">

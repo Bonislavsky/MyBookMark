@@ -1,18 +1,30 @@
 ﻿.conteiner {
     display: grid;
-    grid-template-columns: 175px auto;
     grid-template-rows: minmax(25px, 175px) minmax(700px, 1fr);
     grid-template-areas:
-        "header header"
+        "header"
+        "main-frame";
+    grid-gap: 10px;
+}
+
+.main-frame {
+    display: grid;
+    grid-area: main-frame;
+    grid-template-columns: 175px auto;
+    grid-template-areas:
         "nav content";
     grid-gap: 10px;
+}
+
+.second-frame {
+    grid-area: main-frame;
+    text-align:center;
 }
 
 #header {
     background-color: rgb(241, 240, 176);
     border: 3px solid rgb(190, 166, 85);
     padding: 10px;
-
     grid-area: header;
 }
 
@@ -81,7 +93,11 @@
     grid-area: header-aside;
 }
 
-#ContactInfo {
+.outer {
     text-align: center;
-    grid-area: content;
+}
+
+.inner {
+    text-align: left;
+    width: 100px;
 }
